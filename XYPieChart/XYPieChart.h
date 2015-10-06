@@ -58,6 +58,7 @@
 @property(nonatomic, strong) UIColor *labelColor;
 @property(nonatomic, strong) UIColor *labelShadowColor;
 @property(nonatomic, assign) CGFloat labelRadius;
+@property(nonatomic, assign) CGFloat sliceStroke;
 @property(nonatomic, assign) CGFloat selectedSliceStroke;
 @property(nonatomic, assign) CGFloat selectedSliceOffsetRadius;
 @property(nonatomic, assign) BOOL    showPercentage;

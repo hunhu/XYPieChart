@@ -147,7 +147,8 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         _animationSpeed = 0.5;
         _startPieAngle = M_PI_2*3;
         _selectedSliceStroke = 3.0;
-        
+        _sliceStroke = 2.0;
+      
         self.pieRadius = MIN(frame.size.width/2, frame.size.height/2) - 10;
         self.pieCenter = CGPointMake(frame.size.width/2, frame.size.height/2);
         self.labelFont = [UIFont boldSystemFontOfSize:MAX((int)self.pieRadius/10, 5)];
@@ -187,7 +188,8 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         _animationSpeed = 0.5;
         _startPieAngle = M_PI_2*3;
         _selectedSliceStroke = 3.0;
-        
+        _sliceStroke = 2.0;
+      
         CGRect bounds = [[self layer] bounds];
         self.pieRadius = MIN(bounds.size.width/2, bounds.size.height/2) - 10;
         self.pieCenter = CGPointMake(bounds.size.width/2, bounds.size.height/2);
@@ -501,7 +503,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
             selectedIndex = idx;
         } else {
             [pieLayer setZPosition:kDefaultSliceZOrder];
-            [pieLayer setLineWidth:0.0];
+            [pieLayer setLineWidth:_sliceStroke];
         }
     }];
     return selectedIndex;
@@ -535,7 +537,7 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     
     for (SliceLayer *pieLayer in pieLayers) {
         [pieLayer setZPosition:kDefaultSliceZOrder];
-        [pieLayer setLineWidth:0.0];
+        [pieLayer setLineWidth:_sliceStroke];
     }
 }
 
@@ -646,6 +648,14 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
     [textLayer setPosition:CGPointMake(_pieCenter.x + (_labelRadius * cos(0)), _pieCenter.y + (_labelRadius * sin(0)))];
     [CATransaction setDisableActions:NO];
     [pieLayer addSublayer:textLayer];
+  
+    if (_sliceStroke > 0.0) {
+        [pieLayer setLineWidth:_sliceStroke];
+        [pieLayer setStrokeColor:[UIColor whiteColor].CGColor];
+        [pieLayer setLineJoin:kCALineJoinBevel];
+        [pieLayer setZPosition:MAXFLOAT];
+    }
+  
     return pieLayer;
 }
 
