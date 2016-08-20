@@ -189,19 +189,23 @@ static CGPathRef CGPathCreateArc(CGPoint center, CGFloat radius, CGFloat startAn
         _startPieAngle = M_PI_2*3;
         _selectedSliceStroke = 3.0;
         _sliceStroke = 2.0;
-      
-        CGRect bounds = [[self layer] bounds];
-        self.pieRadius = MIN(bounds.size.width/2, bounds.size.height/2) - 10;
-        self.pieCenter = CGPointMake(bounds.size.width/2, bounds.size.height/2);
-        self.labelFont = [UIFont boldSystemFontOfSize:MAX((int)self.pieRadius/10, 5)];
-        _labelColor = [UIColor whiteColor];
-        _labelRadius = _pieRadius/2;
-        _selectedSliceOffsetRadius = MAX(10, _pieRadius/10);
         
         _showLabel = YES;
         _showPercentage = YES;
     }
     return self;
+}
+
+- (void)layoutSubviews {
+  _pieView.frame = self.superview.bounds;
+  CGRect bounds = [[self layer] bounds];
+  self.pieRadius = MIN(bounds.size.width/2, bounds.size.height/2) - 10;
+  self.pieCenter = CGPointMake(bounds.size.width/2, bounds.size.height/2);
+  self.labelFont = [UIFont boldSystemFontOfSize:MAX((int)self.pieRadius/10, 5)];
+  _labelColor = [UIColor whiteColor];
+  _labelRadius = _pieRadius/2;
+  _selectedSliceOffsetRadius = MAX(10, _pieRadius/10);
+  [super layoutSubviews];
 }
 
 - (void)setPieCenter:(CGPoint)pieCenter
